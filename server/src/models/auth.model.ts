@@ -42,7 +42,6 @@ export const userSchema=new mongoose.Schema<IUser>({
         type:String,
         required:[true,'password field cannot be empty'],
         minLength:[4,'password must be atleast 4 characters'],
-        maxLength:[20,'password cannot be more than 20 characters'],
     },
     role:{
         type:String,
@@ -52,7 +51,7 @@ export const userSchema=new mongoose.Schema<IUser>({
     createdAt:{
         type:Date,
         default:Date.now(),
-    },
+    }, 
 },
 {timestamps:true},
 )

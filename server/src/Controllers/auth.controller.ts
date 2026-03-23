@@ -1,10 +1,11 @@
 import {Request,Response,NextFunction} from 'express';
 import { userauthModel } from '../models/auth.model';
 import bcrypt from 'bcrypt';
-import { userPlayLoad } from '../types/auth.types';
-import { userSchemaVal } from '../validation/user.validation';
+import { userSchemaVal,userloginSchema } from '../validation/user.validation';
 import { JWT_SECRET,SALT_ROUND } from '../configs/env.config';
 import jwt from 'jsonwebtoken';
+
+
 
 export const RegisteredUser=async(req:Request,res:Response,next:NextFunction)=>{
 try{
@@ -51,6 +52,60 @@ if(!createUser){
         success:true,
         message:"user created successfully",
     });
+}catch(error){
+    next(error);
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const alreadyRegisteredUser=async(req:Request,res:Response,next:NextFunction)=>{
+try{
+    const parsed=userloginSchema.safeParse(req.body);
+    if(!parsed.success){
+        const issue=parsed.error.issues[0];
+        return res.status(400).json({
+            success:false,
+            message:issue.message,
+        });
+    }
+    const {email,password}=parsed.data;
+    const oldUser=await userauthModel.findOne({email});
+    if(!oldUser){
+        return res.status(401).json({
+            success:false,
+            message:"user not found",
+        });
+    }
+    const checkPass=await bcrypt.compare(password,oldUser.password);
+    if(!checkPass){
+        return res.status(400).json({
+            success:false,
+            message:"password is incorrect",
+        })
+    }
+    const token=jwt.sign({userId:oldUser._id,email:email,role:oldUser.role},JWT_SECRET as string);
+    res.cookie('token',token,{
+        httpOnly:true,
+        sameSite:'none',
+        secure:true,
+        maxAge:7*24*60*1000,
+        partitioned:true,
+    });
+    return res.status(200).json({
+        success:true,
+        message:"successfully found",
+    })
 }catch(error){
     next(error);
 }
