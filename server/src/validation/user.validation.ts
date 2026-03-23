@@ -14,3 +14,8 @@ export const userloginSchema=z.object({
     email:z.string().email('invalid email format').nonempty('email field cannot be empty'),
     password:z.string(),
 })
+
+
+export const verifyOtpSchema=z.object({
+    otpValue:z.string().min(6,'otp field must have atleast 6 characters').nonempty('otp field cannot be empty'),
+})

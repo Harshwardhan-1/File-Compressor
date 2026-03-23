@@ -11,4 +11,6 @@ export const{
     GROQ_API_KEY,  
     SALT_ROUND,
     JWT_SECRET,
+    SENDGRID_EMAIL,
+    SENDGRID_API_KEY,
 }=process.env;
