@@ -9,5 +9,6 @@ export const{
     PORT,
     FRONTEND_URL,
     GROQ_API_KEY,  
+    SALT_ROUND,
     JWT_SECRET,
 }=process.env;

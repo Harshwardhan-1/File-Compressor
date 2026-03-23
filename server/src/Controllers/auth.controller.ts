@@ -3,7 +3,8 @@ import { userauthModel } from '../models/auth.model';
 import bcrypt from 'bcrypt';
 import { userPlayLoad } from '../types/auth.types';
 import { userSchemaVal } from '../validation/user.validation';
-import { JWT_SECRET } from '../configs/env.config';
+import { JWT_SECRET,SALT_ROUND } from '../configs/env.config';
+import jwt from 'jsonwebtoken';
 
 export const RegisteredUser=async(req:Request,res:Response,next:NextFunction)=>{
 try{
@@ -23,7 +24,33 @@ try{
             message:"email already exist with this account",
         });
     }
-
+    const salt=await bcrypt.genSalt(Number(SALT_ROUND));
+    const hashed=await bcrypt.hash(password,salt);
+    const createUser=await userauthModel.create({
+    name,
+    userName,
+    email,
+    password:hashed,
+    role:"user",
+});
+if(!createUser){
+    return res.status(400).json({
+        success:false,
+        message:"error creating user",
+    });
+}
+    const token=jwt.sign({userId:createUser._id,email:email,role:createUser.role},JWT_SECRET as string);
+    res.cookie("token",token,{
+        httpOnly:true,
+        sameSite:"none",
+        secure:true, 
+        maxAge:7*24*60*1000,
+        partitioned:true,
+    });
+    res.status(201).json({
+        success:true,
+        message:"user created successfully",
+    });
 }catch(error){
     next(error);
 }
