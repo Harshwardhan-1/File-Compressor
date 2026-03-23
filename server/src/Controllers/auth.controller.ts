@@ -6,6 +6,7 @@ import { JWT_SECRET,SALT_ROUND } from '../configs/env.config';
 import jwt from 'jsonwebtoken';
 import { sendOtpService } from '../utils/otp.service';
 import { checkOtpModel } from '../models/otp.model';
+import { authRequest } from '../types/auth.types';
 
 export const RegisteredUser=async(req:Request,res:Response,next:NextFunction)=>{
 try{
@@ -127,9 +128,10 @@ try{
 
 
 
-export const verifyOtp=async(req:Request,res:Response,next:NextFunction)=>{
-
+export const verifyOtp=async(req:authRequest,res:Response,next:NextFunction)=>{
     try{
+        const user=req.user;
+        const email=user?.email;
     const parsed=verifyOtpSchema.safeParse(req.body);
     if(!parsed.success){
         const issue=parsed.error.issues[0];
@@ -139,8 +141,69 @@ export const verifyOtp=async(req:Request,res:Response,next:NextFunction)=>{
         });
     }
     const {otpValue}=parsed.data;
-    const checkOtp=await checkOtpModel.findOne({email});
+    const record=await checkOtpModel.findOne({email});
+    if(!record){
+        return res.status(404).json({
+            success:false,
+            message:"otp not found",
+        });
+    }
+    if(record.otpExpiresTime && Date.now()>record.otpExpiresTime.getTime()){
+        return res.status(400).json({
+            success:false,
+            message:"otp expired",
+        });
+    }
+    if(record.otpValue!==Number(otpValue)){
+        return res.status(400).json({
+            success:false,
+            message:"invalid otp number entered",
+        });
+    }
+    return res.status(200).json({
+        success:true,
+        message:"successfull",
+    });
 }catch(err){
     next(err);
 }
+}
+
+
+
+
+
+
+
+
+
+
+export const resendOtpToUser=async(req:authRequest,res:Response,next:NextFunction)=>{
+    try{
+        const user=req.user;
+        if(!user){
+            return res.status(401).json({
+                success:false,
+                message:"Unauthorized",
+            });
+        }
+        const email=user?.email;
+        if(!email){
+            return res.status(404).json({
+            success:false,   
+            message:"something went wrong",
+            });
+        }
+        try{
+        await sendOtpService(email);
+        return res.status(200).json({
+            success:true,
+            message:"successfully send",
+        })
+        }catch(err){
+            next(err);
+        }
+    }catch(err){
+        next(err);
+    }
 }

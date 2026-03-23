@@ -17,5 +17,5 @@ export const userloginSchema=z.object({
 
 
 export const verifyOtpSchema=z.object({
-    otpValue:z.string().min(6,'otp field must have atleast 6 characters').nonempty('otp field cannot be empty'),
+    otpValue:z.string().min(6,'otp field must have 6 characters').nonempty('otp field cannot be empty'),
 })

@@ -12,7 +12,7 @@ app.use(cors({
   credentials:true,
 }));
 
-import { userauthRoutes } from "./Routes/user.routes.";
+import { userauthRoutes } from "./Routes/user.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
 
 app.get("/"  , (req : Request, res : Response)=>{
