@@ -1,5 +1,5 @@
 import {Request,Response,NextFunction} from 'express';
-export const error=async(err:any,req:Request,res:Response,next:NextFunction)=>{
+export const errorMiddleware=async(err:any,req:Request,res:Response,next:NextFunction)=>{
     try{
         let error={...err};
         error.message=err.message;

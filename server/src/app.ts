@@ -13,11 +13,13 @@ app.use(cors({
 }));
 
 import { userauthRoutes } from "./Routes/user.routes.";
+import { errorMiddleware } from "./middleware/error.middleware";
 
 app.get("/"  , (req : Request, res : Response)=>{
   res.send("hii harsh here")
 })
 
 app.use('/api/v1',userauthRoutes);
+app.use(errorMiddleware);
 
 export default app;

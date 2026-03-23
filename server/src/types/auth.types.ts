@@ -5,7 +5,7 @@ import { JwtPayload } from 'jsonwebtoken';
 export interface userPlayLoad extends JwtPayload{
     usreId:any,
     email:string,
-    name:string,
+    role:string,
 }
 
 
