@@ -4,17 +4,17 @@ import {minLength,maxLength} from 'zod';
 
 export interface IUser extends Document{
     _id:Types.ObjectId,
-    name?:string,
-    userName?:string,
-    email?:string,
-    password?:string,
+    name:string,
+    userName:string,
+    email:string,
+    password:string,
+     role?:string,
     createdAt?:Date,
-    role?:string,
 }
 
 
 
-export const userSchema=new mongoose.Schema({
+export const userSchema=new mongoose.Schema<IUser>({
     name:{
         type:String,
         required:[true,'name is requiered'],
@@ -24,6 +24,7 @@ export const userSchema=new mongoose.Schema({
     },
     userName:{
         type:String,
+        unique:true,
         required:[true,'userName is requierd'],
         trim:true,
         minLength:[3,'userName must be of 3 characters'],
@@ -31,6 +32,7 @@ export const userSchema=new mongoose.Schema({
     },
     email:{
         type:String,
+        lowercase:true,
         required:[true,'email field cannot be empty'],
         match:[/\S+@\S+\.\S+/, 'Please fill a valid email address'],
         trim:true,
@@ -42,14 +44,18 @@ export const userSchema=new mongoose.Schema({
         minLength:[4,'password must be atleast 4 characters'],
         maxLength:[20,'password cannot be more than 20 characters'],
     },
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user",
+    },
     createdAt:{
         type:Date,
-        enum:['user','admin'],
-        default:"user",
+        default:Date.now(),
     },
 },
 {timestamps:true},
 )
 
 
-export const userauthModel=mongoose.model('registerdUser',userSchema);
+export const userauthModel=mongoose.model<IUser>('registerdUser',userSchema);
