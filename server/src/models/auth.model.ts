@@ -27,7 +27,7 @@ export const userSchema=new mongoose.Schema<IUser>({
         unique:true,
         required:[true,'userName is requierd'],
         trim:true,
-        minLength:[3,'userName must be of 3 characters'],
+        minLength:[5,'userName must be of 3 characters'],
         maxLength:[20,'userName cannot be more than 20 characters'],
     },
     email:{
@@ -58,4 +58,4 @@ export const userSchema=new mongoose.Schema<IUser>({
 )
 
 
-export const userauthModel=mongoose.model<IUser>('registerdUser',userSchema);
+export const userauthModel=mongoose.model<IUser>('RegisterdUser',userSchema);
