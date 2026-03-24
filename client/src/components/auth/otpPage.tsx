@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { env } from "../../configs/env.config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import '../styles/otpPage.css';
 
 export default function OtpPage(){
     const navigate=useNavigate();

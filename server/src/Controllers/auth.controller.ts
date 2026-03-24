@@ -214,3 +214,19 @@ export const resendOtpToUser=async(req:authRequest,res:Response,next:NextFunctio
         next(err);
     }
 }
+
+
+
+
+
+
+
+
+
+export const checkTok=async(req:authRequest,res:Response)=>{
+return res.status(200).json({
+    success:true,
+    message:'successfull',
+    data:req.user,
+});
+}

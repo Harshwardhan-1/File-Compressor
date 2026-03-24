@@ -1,0 +1,130 @@
+/* Wrapper same theme */
+.otp-page-wrapper {
+  min-height: 98vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f2027, #203a43);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Blur effect */
+.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Main card */
+.otp-page {
+  max-width: 360px;
+  width: 90%;
+  padding: 36px;
+  background-color: #2C3E50;
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading */
+.otp-page h1 {
+  color: #FDFEFE;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Subtext */
+.otp-page p {
+  font-size: 14px;
+  color: #AAB7B8;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* Form */
+.otp-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* OTP input (centered for better UX) */
+.otp-page input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #566573;
+  background-color: #1C2833;
+  color: #FDFEFE;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 6px; /* 🔥 OTP feel */
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.otp-page input::placeholder {
+  color: #ABB2B9;
+  letter-spacing: normal;
+}
+
+.otp-page input:focus {
+  border-color: #FDFEFE;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  background-color: #17202A;
+}
+
+/* Submit button */
+.otp-page button {
+  padding: 14px;
+  background-color: #1A5276;
+  color: #FDFEFE;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.otp-page button:hover {
+  background-color: #2874A6;
+}
+
+.otp-page button:active {
+  transform: scale(0.98);
+}
+
+/* Resend button (secondary look) */
+.otp-page button:last-child {
+  background-color: transparent;
+  border: 1px solid #566573;
+  color: #D5D8DC;
+  font-size: 14px;
+}
+
+.otp-page button:last-child:hover {
+  background-color: #1C2833;
+}
+
+/* Disabled state */
+.otp-page button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.8s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
