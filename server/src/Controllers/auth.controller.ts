@@ -19,6 +19,13 @@ try{
         })
     }
     const {name,userName,email,password}=parsed.data;
+    const checkUserName=await userauthModel.findOne({userName});
+    if(checkUserName){
+        return res.status(400).json({
+            success:false,
+            message:"userName already taken",
+        });
+    }
     const checkUser=await userauthModel.findOne({email});
     if(checkUser){
         return res.status(409).json({
@@ -112,7 +119,7 @@ try{
 
     return res.status(200).json({
         success:true,
-        message:"successfully found",
+        message:"already registered",
     })
 }catch(error){
     next(error);
@@ -162,7 +169,7 @@ export const verifyOtp=async(req:authRequest,res:Response,next:NextFunction)=>{
     }
     return res.status(200).json({
         success:true,
-        message:"successfull",
+        message:"successfull verified",
     });
 }catch(err){
     next(err);
