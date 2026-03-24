@@ -1,80 +1,60 @@
 import '../styles/Dashboard.css';
-import { Lock, FileImage, FileText, FileArchive, Video } from "lucide-react";
+import axios from 'axios';
+import '../styles/SignUp.css';
+import { AxiosError } from 'axios';
+import { useState } from 'react';
+import { env } from '../../configs/env.config';
 
-export function Dashboard() {
-  const tools = [
-    {
-      title: "Compress video",
-      icon: <Video size={28} />,
-      desc: "Reduce video size by adjusting...",
-    },
-    {
-      title: "Compress image",
-      icon: <FileImage size={28} />,
-      desc: "Reduce the size of JPG, PNG, GIF, or RAW...",
-    },
-    {
-      title: "Compress PDF",
-      icon: <FileText size={28} />,
-      desc: "Reduce PDF size for easier upload and...",
-    },
-    {
-      title: "Create ZIP file",
-      icon: <FileArchive size={28} />,
-      desc: "Combine selected files into a ZIP...",
-    },
-    {
-      title: "Compress JPG",
-      icon: <FileImage size={28} />,
-      desc: "Reduce JPG size or compress images to JPG...",
-    },
-  ];
+export function SignUp() {
+    const [name,setName]=useState<string>('');
+    const [userName,setuserName]=useState<string>('');
+    const [email,setEmail]=useState<string>('');
+    const [password,setPassword]=useState<string>('');
+    const [confirmPassword,setConfirmPassword]=useState<string>('');
+
+  const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    if(password!==confirmPassword){
+        return alert('password and confirm password do not match');
+    }
+    const send={name,userName,email,password};
+    try{
+        const response=await axios.post(`${env.backendUrl}/api/v1/addUser`,send,{withCredentials:true});
+        if(response.data.message=== 'user created successfully'){
+            alert('user created successfully');
+        }
+    }catch(err){
+        const error=err as AxiosError;
+        if(error.response && error.response.data){
+            const data=error.response.data as {error?:string,message?:string};
+            alert(data.error || data.message || 'something went wrong');
+        }else{
+            alert(error.message);
+        }
+    }
+  }
 
   return (
-    <div className="dashboard">
-          <div className="auth-buttons">
-    <button className="login">Login</button>
-    <button className="register">Register</button>
-  </div>
-
-      <div className="header">
-        <h1>Free Online File Compressor</h1>
-        <p>Compress your files online. Select a compression tool:</p>
-      </div>
-
-            <div className="categories">
-        <span>Compress video</span>
-        <span>Compress Image</span>
-        <span>Compress PDF</span>
-        <span>Create ZIP</span>
-      </div>
-      <div className="card-grid">
-        {tools.slice(0,4).map((tool, index) => (
-          <div className="card" key={index}>
-            <div className="card-left">
-                 <div className="icon">{tool.icon}</div>
-              <div>
-                <h3>{tool.title}</h3>
-                <p>{tool.desc}</p>
-              
-              </div>
-            </div>
-            <Lock size={18} className="lock" />
-          </div>
-        ))}
-      </div>
-      <div className="bottom-card">
-        <div className="card">
-          <div className="card-left">
-            <div className="icon">{tools[4].icon}</div>
-            <div>
-              <h3>{tools[4].title}</h3>
-              <p>{tools[4].desc}</p>
-            </div>
-          </div>
-          <Lock size={18} className="lock" />
+    <>
+    <div className="signup-page-wrapper">
+          <div className="signup-page">
+        <h1>Create an Account</h1>
+        <p>Get Started with us</p>
+        <form onSubmit={handleSubmit}>
+               <label>Name</label>
+          <input type="text" placeholder='Enter your Name' value={name} onChange={(e)=>setName(e.target.value)} />
+                    <label>Username</label>
+          <input type="text" placeholder='Enter your username' value={userName} onChange={(e)=>setuserName(e.target.value)} />
+          <label>Email</label>
+          <input type="email" placeholder='Enter your email ' value={email} onChange={(e)=>setEmail(e.target.value)}  />
+         <label>password</label>
+          <input type="password" placeholder='Create a password' value={password} onChange={(e)=>setPassword(e.target.value)} />
+          <label>Confirm Password</label>
+          <input type="password"  placeholder='Confirm Password' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
+          <button type='submit'>Submit</button>
+        </form>
         </div>
-      </div>
-    </div>
+        </div>
+    </>
   );
 }
