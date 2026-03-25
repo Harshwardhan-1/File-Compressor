@@ -80,6 +80,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  cursor: pointer;
 }
 
 
@@ -121,6 +122,7 @@
 
 .lock {
   color: #aaa;
+  pointer-events: none;
 }
 
 
@@ -128,6 +130,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .bottom-card .card {

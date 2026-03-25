@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import '../styles/otpPage.css';
 
-export default function OtpPage(){
+export function OtpPage(){
     const navigate=useNavigate();
     const [otpnumber,setotpnumber]=useState<string>('');
     const [loading,setLoading]=useState<boolean>(false);
