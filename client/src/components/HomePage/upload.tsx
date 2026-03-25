@@ -50,7 +50,7 @@ export function UploadFile(){
       
         <form  className="upload-form" onSubmit={handleSubmit} encType="multipart/form-data">
          <label className="upload-box">
-            <input className="file-input" type="file" name="userFile" onChange={(e)=>setFile(e.target.files?.[0])} />
+            <input className="file-input" type="file" name="userfile" onChange={(e)=>setFile(e.target.files?.[0])} />
              <div className="upload-inner">
                     <div className="cloud">☁</div>
                     <p>Drop files here or click to upload</p>
