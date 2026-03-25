@@ -1,87 +1,86 @@
+/* Container */
 .upload-container {
-  font-family: Arial, sans-serif;
   padding: 20px 40px;
-  background: #f5f5f5;
+  background: #f3f3f3;
+  font-family: Arial, sans-serif;
 }
 
+/* Top text */
+.upload-text {
+  font-size: 14px;
+  color: #333;
+}
 
-.title {
+/* Title */
+.upload-title {
   font-size: 28px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin: 10px 0 20px;
 }
 
-
-.subtitle {
-  color: #555;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-
-.upload-box {
+/* Form */
+.upload-form {
   background: #fff;
   padding: 15px;
   border-radius: 6px;
 }
 
-
-.upload-area {
+/* Upload box */
+.upload-box {
   display: block;
   background: #c92c0c;
   border-radius: 8px;
-  border: 2px dashed rgba(255, 255, 255, 0.5);
   padding: 50px 20px;
   text-align: center;
+  border: 2px dashed rgba(255,255,255,0.6);
   cursor: pointer;
   position: relative;
 }
 
-
-.upload-content {
-  color: #fff;
+/* Hide input */
+.file-input {
+  display: none;
 }
 
+/* Inner content */
+.upload-inner {
+  color: white;
+}
 
-.cloud-icon {
+/* Cloud icon */
+.cloud {
   font-size: 50px;
   margin-bottom: 10px;
 }
 
-.upload-content p {
-  font-size: 16px;
+/* Text */
+.upload-inner p {
   margin-bottom: 15px;
+  font-size: 16px;
 }
 
-
-.choose-btn {
-  background: #fff;
+/* Choose file */
+.choose-file {
+  background: white;
   color: #333;
-  border: none;
   padding: 10px 18px;
-  font-size: 14px;
   border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
 }
 
-.choose-btn:hover {
-  background: #eee;
-}
-
-
+/* Start button */
 .start-btn {
   margin-top: 15px;
   background: #1a73e8;
-  color: white;
+  color: #fff;
   border: none;
   padding: 12px 22px;
-  font-size: 14px;
   border-radius: 4px;
-  cursor: pointer;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .start-btn:hover {
-  background: #1558b0;
+  background: #1557b0;
 }

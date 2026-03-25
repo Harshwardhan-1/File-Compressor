@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from 'axios';
 import { env } from "../../configs/env.config";
-import '../styles/uploadpage.css';
+import '../styles/uploadpage.css'
 export function UploadFile(){
     const [file,setFile]=useState<File>();
     const location=useLocation();
@@ -44,12 +44,21 @@ export function UploadFile(){
     
     return(
         <>
-        <p>Upload your file here {store[0].userName}</p> 
-        <h1>Upload {store[0].title}</h1>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <input type="file" name="file" onChange={(e)=>setFile(e.target.files?.[0])} />
-            <button type="submit">Start</button>
+         <div className="upload-container">
+        <p className="upload-text">Upload your file here {store[0].userName}</p> 
+        <h1 className="upload-title">{store[0].title}</h1>
+        <form  className="upload-form" onSubmit={handleSubmit} encType="multipart/form-data">
+         <label className="upload-box">
+            <input className="file-input" type="file" name="file" onChange={(e)=>setFile(e.target.files?.[0])} />
+             <div className="upload-inner">
+                    <div className="cloud">☁</div>
+                    <p>Drop files here or click to upload</p>
+                    <span className="choose-file">Choose file</span>
+                </div>
+            </label>
+            <button className="start-btn" type="submit">Start</button>
         </form>
+        </div>
         </>
     );
 }
