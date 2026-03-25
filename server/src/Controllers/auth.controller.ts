@@ -51,10 +51,9 @@ if(!createUser){
     const token=jwt.sign({userId:createUser._id,email:email,role:createUser.role},JWT_SECRET as string);
     res.cookie("token",token,{
         httpOnly:true,
-        sameSite:"none",
-        secure:true, 
+        sameSite:"lax",
+        secure:false, 
         maxAge:7*24*60*60*1000,
-        partitioned:true,
     });
     res.status(201).json({
         success:true,
@@ -111,10 +110,9 @@ try{
     const token=jwt.sign({userId:oldUser._id,email:email,role:oldUser.role},JWT_SECRET as string);
     res.cookie('token',token,{
         httpOnly:true,
-        sameSite:'none',
-        secure:true,
+        sameSite:'lax',
+        secure:false,
         maxAge:7*24*60*60*1000,
-        partitioned:true,
     });
 
     return res.status(200).json({

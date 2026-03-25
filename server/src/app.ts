@@ -13,6 +13,7 @@ app.use(cors({
 }));
 
 import { userauthRoutes } from "./Routes/user.routes";
+import { userUploadFile } from "./Routes/user.upload";
 import { errorMiddleware } from "./middleware/error.middleware";
 
 app.get("/"  , (req : Request, res : Response)=>{
@@ -20,6 +21,7 @@ app.get("/"  , (req : Request, res : Response)=>{
 })
 
 app.use('/api/v1',userauthRoutes);
+app.use('/api/v1',userUploadFile);
 app.use(errorMiddleware);
 
 export default app;

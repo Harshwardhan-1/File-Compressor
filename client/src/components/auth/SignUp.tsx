@@ -37,6 +37,8 @@ export function SignUp() {
         }else{
             alert(error.message);
         }
+    }finally{
+        setloading(false);
     }
   }
 
