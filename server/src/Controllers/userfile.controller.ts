@@ -4,6 +4,7 @@ import { authRequest } from '../types/auth.types';
 import { userFileSchema } from '../validation/userFile.validation';
 import fs from 'fs';
 import sharp from 'sharp';
+import { upload } from '../middleware/userfile.middleware';
 
 export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
     try{
@@ -39,12 +40,15 @@ if(filetype=== 'Compress image'){
       const compressedBuffer=await image.toBuffer();
       const compressedPath = `uploads/compressed-${uploadFile?.filename}`;
     await fs.promises.writeFile(compressedPath, compressedBuffer);
+    const compressedUrl= `${req.protocol}://${req.get("host")}/uploads/compressed-${uploadFile?.filename}`;
+
       return res.status(200).json({
         success:true,
         message:"successfull",
         data:{
-            orignal:uploadFile?.path,
-            compressed:compressedPath,
+            compressed:compressedUrl,
+            orignalSize:(uploadFile?.size?(uploadFile.size/1024).toFixed(2)+"KB":"0"),
+            compressedSize:(compressedBuffer.length / 1024).toFixed(2) + " KB",
         }
       });
 }

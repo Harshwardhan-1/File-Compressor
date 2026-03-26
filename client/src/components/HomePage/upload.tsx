@@ -4,6 +4,8 @@ import { AxiosError } from "axios";
 import axios from 'axios';
 import { env } from "../../configs/env.config";
 import '../styles/uploadpage.css'
+
+
 export function UploadFile(){
     const [file,setFile]=useState<File>();
     const location=useLocation();
@@ -17,19 +19,31 @@ export function UploadFile(){
     ]
     console.log(store); 
 
+    interface compLinkSize{
+        compressed:string,
+        orignalSize:string,
+        compressedSize:string,
+    }
+
+   
+    const [complink,setcomplink]=useState<compLinkSize>();
+    const [loading,setLoading]=useState<boolean>(false);
 
     const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
+        setLoading(true);
         if(!file){
+            setLoading(false);
             return alert('please select a file');
         }
            const formdata=new FormData();
             formdata.append('userfile',file);
             formdata.append('filetype',store[0].title);
         try{
-            const response=await axios.post(`${env.backendUrl}/api/userUpload/upload`,formdata,{withCredentials:true});
+            const response=await axios.post(`${env.backendUrl}/api/v1/upload`,formdata,{withCredentials:true});
             if(response.data.message=== 'successfull'){
                 alert('file compressed successfully');
+                setcomplink(response.data.data);
             }
         }catch(err){
         const error=err as AxiosError;
@@ -39,8 +53,18 @@ export function UploadFile(){
         }else{
             alert(error.message);
         }
+    }finally{
+        setLoading(false);
     }
     }
+    const handleDownload = (url: string, fileName: string) => {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName; // it teels browser to save as
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
     
     return(
         <>
@@ -60,9 +84,29 @@ export function UploadFile(){
                     </p>
                 </div>
             </label>
-            <button className="start-btn" type="submit">Start</button>
+            <button className="start-btn" type="submit">
+                {loading?<div className="spinner"></div>:"Start"}
+            </button>
         </form>
         </div>
+
+       {complink && (
+    <div>
+        <p>OrignalSize:{complink?.orignalSize}</p>
+        <p>compressedSize:{complink?.compressedSize}</p>
+ <button
+      className="download-btn"
+      onClick={() => handleDownload(
+        `http://localhost:3000/download/${complink.compressed.split('/').pop()}`,
+        complink.compressed.split('/').pop() || "file.jpeg"
+      )}
+    >
+      Download Compressed Image
+    </button>
+    
+    </div>
+)}
+
         </>
     );
 }
