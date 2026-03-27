@@ -39,12 +39,9 @@ for (const [byte, count] of freqMap) {
   pq.push({ byte, freq: count });
 }
 pq.sort((a, b) => a.freq - b.freq);
-
-// Created tree
 while (pq.length > 1) {
   const left = pq.shift()!;
   const right = pq.shift()!;
-  
   const parent: Node = {
     freq: left.freq + right.freq,
     left,
@@ -54,8 +51,16 @@ while (pq.length > 1) {
   pq.sort((a, b) => a.freq - b.freq);
 }
 const huffmanTree = pq[0];
-
-
+const codeMap = new Map<number,string>();
+function generateCodes(node: Node | undefined, code: string) {
+    if (!node) return;
+    if (node.byte !== undefined) {
+        codeMap.set(node.byte, code || "0"); 
+    }
+    generateCodes(node.left, code + "0");
+    generateCodes(node.right, code + "1");
+}
+generateCodes(huffmanTree, "");
 
 
     }catch(err){
