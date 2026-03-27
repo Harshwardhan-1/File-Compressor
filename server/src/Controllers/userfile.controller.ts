@@ -61,7 +61,23 @@ function generateCodes(node: Node | undefined, code: string) {
     generateCodes(node.right, code + "1");
 }
 generateCodes(huffmanTree, "");
-
+let compressedBinaryString="";
+for(let byte of buffer){
+  compressedBinaryString+=codeMap.get(byte);
+}
+const bytes: number[] = [];
+let bit = "";
+for(let i = 0; i < compressedBinaryString.length; i++){
+    bit += compressedBinaryString[i];
+    if(bit.length === 8){
+        bytes.push(parseInt(bit, 2));
+        bit = "";
+    }
+}
+if(bit.length > 0){
+    while(bit.length < 8) bit += "0";
+    bytes.push(parseInt(bit, 2));
+}
 
     }catch(err){
       next(err);
