@@ -19,14 +19,12 @@ export function UploadFile(){
     ]
     console.log(store); 
 
-    interface compLinkSize{
-        compressed:string,
-        orignalSize:string,
-        compressedSize:string,
-    }
-
-   
-    const [complink,setcomplink]=useState<compLinkSize>();
+    // interface compLinkSize{
+    //     compressed:string,
+    //     orignalSize:string,
+    //     compressedSize:string,
+    // }
+    // const [complink,setcomplink]=useState<compLinkSize>();
     const [loading,setLoading]=useState<boolean>(false);
 
     const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
@@ -43,7 +41,7 @@ export function UploadFile(){
             const response=await axios.post(`${env.backendUrl}/api/v1/upload`,formdata,{withCredentials:true});
             if(response.data.message=== 'successfull'){
                 alert('file compressed successfully');
-                setcomplink(response.data.data);
+                // setcomplink(response.data.data);
             }
         }catch(err){
         const error=err as AxiosError;
@@ -57,14 +55,14 @@ export function UploadFile(){
         setLoading(false);
     }
     }
-    const handleDownload = (url: string, fileName: string) => {
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName; // it teels browser to save as
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+//     const handleDownload = (url: string, fileName: string) => {
+//   const link = document.createElement("a");
+//   link.href = url;
+//   link.download = fileName; // it teels browser to save as
+//   document.body.appendChild(link);
+//   link.click();
+//   document.body.removeChild(link);
+// };
     
     return(
         <>
@@ -90,7 +88,7 @@ export function UploadFile(){
         </form>
         </div>
 
-       {complink && (
+       {/* {complink && (
     <div>
         <p>OrignalSize:{complink?.orignalSize}</p>
         <p>compressedSize:{complink?.compressedSize}</p>
@@ -105,7 +103,7 @@ export function UploadFile(){
     </button>
     
     </div>
-)}
+)} */}
 
         </>
     );

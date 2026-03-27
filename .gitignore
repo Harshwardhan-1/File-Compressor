@@ -1,0 +1,8 @@
+#Ignore C++ code
+huffmancode.cpp
+
+#optional ignore
+*.exe
+*.o
+*.obj
+*.out
