@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { Lock, FileImage, FileText,  Video } from "lucide-react";
+import { FileImage, FileText,  Video } from "lucide-react";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import { env } from "../../configs/env.config";
-import { AxiosError } from "axios";
+import { ShowAlert } from "../../utils/alert";
 import "../styles/HomePages/Dashboard.css";
 export function Dashboard(){
     interface userlogin{
@@ -25,11 +25,7 @@ export function Dashboard(){
                     setData(response.data.data);
                 }
             }catch(err){
-                const error=err as AxiosError;
-                if(error.response && error.response.data){
-                    const data=error.response.data as {error?:string,message?:string};
-                    console.log(data.error || data.message || 'something went wrong');
-                }
+                ShowAlert(err);
             }
         };
         fetch();
@@ -38,7 +34,7 @@ export function Dashboard(){
     
     const handleCardClick=async(tool:cardClick)=>{
       if(!data){
-      return  alert('please do a signUp first');
+      return  ShowAlert('please do a signUp first');
       }else{
         navigate('/upload',{state:{harsh:{title:tool.title,desc:tool.desc,userName:data?.userName}}})
       }
@@ -93,7 +89,7 @@ export function Dashboard(){
         <span>Compress JPG</span>
       </div>
       <div className="card-grid">
-        {tools.slice(0,3).map((tool, index) => (
+        {tools.slice(0,4).map((tool, index) => (
           <div className="card" key={index} onClick={()=>handleCardClick(tool)}>
             <div className="card-left">
                  <div className="icon">{tool.icon}</div>
@@ -104,18 +100,7 @@ export function Dashboard(){
             </div>
           </div>
         ))}
-      </div>
-      <div className="bottom-card">
-        <div className="card" onClick={()=>handleCardClick(tools[4])}>
-          <div className="card-left">
-            <div className="icon">{tools[3].icon}</div>
-            <div>
-              <h3>{tools[3].title}</h3>
-              <p>{tools[3].desc}</p>
-            </div>
-          </div>
-          <Lock size={18} className="lock" />
-        </div>
+
       </div>
     </div>
         </>

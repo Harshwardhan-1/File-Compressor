@@ -4,6 +4,7 @@ import { env } from "../../configs/env.config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../styles/authPageStyle/otpPage.css";
+import { ShowAlert } from "../../utils/alert";
 export function OtpPage(){
     const navigate=useNavigate();
     const [otpnumber,setotpnumber]=useState<string>('');
@@ -22,13 +23,7 @@ export function OtpPage(){
                 alert('successfully send');
             }
         }catch(err){
-            const error=err as AxiosError;
-            if(error.response && error.response.data){
-                const data=error.response.data as {error?:string,message?:string};
-                console.log(data.error || data.message || 'something went wrong');
-            }else{
-                alert(error.message); 
-            }
+            ShowAlert(err);
         }finally{
             setresendLoad(false);
         }

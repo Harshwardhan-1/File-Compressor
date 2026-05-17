@@ -1,9 +1,10 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { env } from "../../configs/env.config";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../styles/authPageStyle/login.css";
+import { ShowAlert } from "../../utils/alert";
 export function Login(){
     const navigate=useNavigate();
     const [email,setEmail]=useState<string>('');
@@ -22,13 +23,7 @@ export function Login(){
                 navigate('/otpPage');
             }
         }catch(err){
-            const error=err as AxiosError;
-            if(error.response && error.response.data){
-                const data=error.response.data as {error?:string;message?:string};
-                alert(data.error || data.message || 'something went wrong');
-            }else{
-                alert(error.message);
-            }
+            ShowAlert(err);
         }finally{
             setLoading(false);
         }

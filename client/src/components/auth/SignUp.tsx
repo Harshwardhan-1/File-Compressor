@@ -1,12 +1,11 @@
-import '../styles/Dashboard.css';
 import axios from 'axios';
 import "../styles/authPageStyle/SignUp.css";
-import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { env } from '../../configs/env.config';
 import { useNavigate } from 'react-router-dom';
 import {easeIn, motion} from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ShowAlert } from '../../utils/alert';
 
 export function SignUp() {
     const navigate=useNavigate();   
@@ -30,13 +29,7 @@ export function SignUp() {
             navigate('/login');
         }
     }catch(err){
-        const error=err as AxiosError;
-        if(error.response && error.response.data){
-            const data=error.response.data as {error?:string,message?:string};
-            alert(data.error || data.message || 'something went wrong');
-        }else{
-            alert(error.message);
-        }
+        ShowAlert(err);
     }finally{
         setloading(false);
     }
