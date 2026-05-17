@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from 'axios';
 import { env } from "../../configs/env.config";
-import '../styles/uploadpage.css'
+import "../styles/HomePages/uploadpage.css";
 
 
 

@@ -4,6 +4,7 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { env } from "../../configs/env.config";
 import { AxiosError } from "axios";
+import "../styles/HomePages/Dashboard.css";
 export function Dashboard(){
     interface userlogin{
         name:string,
