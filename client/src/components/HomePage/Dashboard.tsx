@@ -1,35 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { FileImage, FileText,  Video } from "lucide-react";
-import { useState,useEffect } from "react";
-import axios from "axios";
-import { env } from "../../configs/env.config";
 import { ShowAlert } from "../../utils/alert";
+import { CheckToken } from "../../hooks/checkToken";
 import "../styles/HomePages/Dashboard.css";
 export function Dashboard(){
-    interface userlogin{
-        name:string,
-        userName:string,
-        email:string,
-    }
+
     interface cardClick{
       title:string,
       desc:string,
     }
-    const [data,setData]=useState<userlogin | null>(null);
 
-    useEffect(()=>{
-        const fetch=async()=>{
-            try{
-                const response=await axios.get(`${env.backendUrl}/api/v1/checkTok`,{withCredentials:true});
-                if(response.data.message=== 'successfull'){
-                    setData(response.data.data);
-                }
-            }catch(err){
-                ShowAlert(err);
-            }
-        };
-        fetch();
-    },[]);
+
+    const {data}=CheckToken();
 
     
     const handleCardClick=async(tool:cardClick)=>{
