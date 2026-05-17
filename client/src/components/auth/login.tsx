@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 import { env } from "../../configs/env.config";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import '../styles/login.css';
+import "../styles/authPageStyle/login.css";
 export function Login(){
     const navigate=useNavigate();
     const [email,setEmail]=useState<string>('');

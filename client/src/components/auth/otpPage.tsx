@@ -3,8 +3,7 @@ import axios, { AxiosError } from "axios";
 import { env } from "../../configs/env.config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import '../styles/otpPage.css';
-
+import "../styles/authPageStyle/otpPage.css";
 export function OtpPage(){
     const navigate=useNavigate();
     const [otpnumber,setotpnumber]=useState<string>('');

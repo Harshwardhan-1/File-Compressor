@@ -13,7 +13,7 @@ return res.status(401).json({
     success:false,
     message:"token not found",
 });
-}
+}  
 const decodedData=jwt.verify((token),JWT_SECRET as string) as userPlayLoad;
 const useremail=decodedData.email;
 const user=await userauthModel.findOne({email:useremail}).select('-password');

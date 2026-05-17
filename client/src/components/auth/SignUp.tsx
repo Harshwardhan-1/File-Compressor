@@ -1,6 +1,6 @@
 import '../styles/Dashboard.css';
 import axios from 'axios';
-import '../styles/SignUp.css';
+import "../styles/authPageStyle/SignUp.css";
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { env } from '../../configs/env.config';

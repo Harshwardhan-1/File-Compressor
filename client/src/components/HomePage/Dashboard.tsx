@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Lock, FileImage, FileText, FileArchive, Video } from "lucide-react";
+import { Lock, FileImage, FileText,  Video } from "lucide-react";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import { env } from "../../configs/env.config";
@@ -60,11 +60,6 @@ export function Dashboard(){
       desc: "Reduce PDF size for easier upload and...",
     },
     {
-      title: "Create ZIP file",
-      icon: <FileArchive size={28} />,
-      desc: "Combine selected files into a ZIP...",
-    },
-    {
       title: "Compress JPG",
       icon: <FileImage size={28} />,
       desc: "Reduce JPG size or compress images to JPG...",
@@ -94,10 +89,10 @@ export function Dashboard(){
         <span>Compress video</span>
         <span>Compress Image</span>
         <span>Compress PDF</span>
-        <span>Create ZIP</span>
+        <span>Compress JPG</span>
       </div>
       <div className="card-grid">
-        {tools.slice(0,4).map((tool, index) => (
+        {tools.slice(0,3).map((tool, index) => (
           <div className="card" key={index} onClick={()=>handleCardClick(tool)}>
             <div className="card-left">
                  <div className="icon">{tool.icon}</div>
@@ -112,10 +107,10 @@ export function Dashboard(){
       <div className="bottom-card">
         <div className="card" onClick={()=>handleCardClick(tools[4])}>
           <div className="card-left">
-            <div className="icon">{tools[4].icon}</div>
+            <div className="icon">{tools[3].icon}</div>
             <div>
-              <h3>{tools[4].title}</h3>
-              <p>{tools[4].desc}</p>
+              <h3>{tools[3].title}</h3>
+              <p>{tools[3].desc}</p>
             </div>
           </div>
           <Lock size={18} className="lock" />

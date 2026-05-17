@@ -77,10 +77,11 @@
 
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: center;
   gap: 20px;
   cursor: pointer;
+  flex-wrap: wrap;
 }
 
 
