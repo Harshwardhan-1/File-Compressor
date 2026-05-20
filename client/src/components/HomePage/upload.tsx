@@ -5,6 +5,14 @@ import { env } from "../../configs/env.config";
 import axios from "axios";
 import { ShowAlert } from "../../utils/alert";
 
+interface compressedImage{
+    outputPath:string,
+    BeforeCompressionSize:string,
+    AfterCompressionSize:string,
+    TotalMbSaved:string,
+}
+
+
 export function UploadFile(){
     const [file,setFile]=useState<File>();
     const location=useLocation();
@@ -16,21 +24,44 @@ export function UploadFile(){
           userName:tool.userName,  
         },
     ]
+        const [data,setData]=useState<compressedImage>();
+        const [loading,setloading]=useState(false);
+        const [hideData,setHideData]=useState(false);
+        const handleSubmit=async(e:React.FormEvent<HTMLButtonElement>)=>{
+            e.preventDefault();
+            if(!file || !store[0].title){
+                ShowAlert('please select a file to compress');
+                return;
+            }
+            setloading(true);
+            setHideData(false);
+            const formData=new FormData();
+            formData.append('userfile',file);
+            formData.append('title',store[0].title);
+            try{
+                const response=await axios.post(`${env.backendUrl}/api/v1/userFile`,formData,{withCredentials:true});
+                if(response.data.message=== 'File Compressed Successfully'){
+                    setHideData(true);
+                    ShowAlert("file compressed successfully")
+                    setData(response.data.data);
+                }
+            }catch(err){
+                ShowAlert(err);
+            }finally{
+                setloading(false);
+            }
+    }
 
-    const handleSubmit=async()=>{
-        if(!file || !store[0].title){
-            return;
-        }
-        const formData=new FormData();
-        formData.append('userfile',file);
-        formData.append('title',store[0].title);
+
+    const handleDownload=async(data:string)=>{
         try{
-            const response=await axios.post(`${env.backendUrl}/api/v1/userFile`,formData,{withCredentials:true});
-            if(response.data.message=== 'successfull'){
-                console.log('file compressed successfully');
+            const downloadPath=data;
+            const response=await axios.post(`${env.backendUrl}/${downloadPath}`);
+            if(response.data.message=== 'successfully download'){
+                ShowAlert("Succcessfully Download")
             }
         }catch(err){
-            ShowAlert(err);
+            ShowAlert(err); 
         }
     }
     return(
@@ -38,7 +69,7 @@ export function UploadFile(){
          <div className="upload-container">
         <p className="upload-text">Upload your file here {store[0].userName}</p> 
         <h1 className="upload-title">{store[0].title}</h1>
-        <form  className="upload-form" encType="multipart/form-data" onSubmit={handleSubmit}>
+        <form  className="upload-form" encType="multipart/form-data">
          <label className="upload-box">
             <input className="file-input" type="file" name="userfile" onChange={(e)=>setFile(e.target.files?.[0])} />
              <div className="upload-inner">
@@ -48,8 +79,19 @@ export function UploadFile(){
                     <p className="file-name">{file?file.name:" "}</p>
                 </div>
             </label>
-            <button className="start-btn" type="submit">Send</button>
+            <button onClick={handleSubmit} className="start-btn" type="submit">{loading ?(<div className="spinner"></div>):("Send")}</button>
         </form>
+
+        {data && hideData && (
+           <>
+           <div>
+           <h1>Size Before Compression:{data.BeforeCompressionSize}</h1>
+           <h1>Size After Compression:{data.AfterCompressionSize}</h1>
+           <h1>Total Mb Saved:{data.TotalMbSaved}</h1>
+           <button onClick={()=>handleDownload(data.outputPath)}>Download</button>
+           </div>
+           </>
+        )}
         </div>
         </>
     );

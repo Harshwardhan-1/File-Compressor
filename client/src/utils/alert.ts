@@ -3,6 +3,24 @@ import { AxiosError } from "axios";
 
 export const ShowAlert=(err:unknown)=>{
     let message="Something went wrong";
+    if(typeof err=== "string" && (err=== "file compressed successfully" || err=== "Successfully Download")){
+        let showMess="successfull";
+        if(err=== 'file compressed successfully'){
+            showMess="file compressed successfully";
+        }else if(err=== 'Successfully Download'){
+            showMess="Successfully Download";
+        }
+        return Swal.fire({
+            toast:true,
+            title:showMess,
+            position:'top-end',
+            icon:"success",
+            showConfirmButton:false,
+            timer: 2000,
+            background: "#0f172a",
+            color: "#e2e8f0",
+        })
+    }
     if(typeof err=== "string"){
         message=err;
     }else{
