@@ -12,8 +12,7 @@ export function Dashboard(){
 
 
     const {data}=CheckToken();
-
-    
+    const navigate=useNavigate();
     const handleCardClick=async(tool:cardClick)=>{
       if(!data){
       return  ShowAlert('please do a signUp first');
@@ -21,7 +20,6 @@ export function Dashboard(){
         navigate('/upload',{state:{harsh:{title:tool.title,desc:tool.desc,userName:data?.userName}}})
       }
     }
-    const navigate=useNavigate();
       const tools = [
     {
       title: "Compress video",

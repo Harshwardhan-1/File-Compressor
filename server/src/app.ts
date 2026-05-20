@@ -12,7 +12,7 @@ app.use(cors({
   methods:['GET','POST','PUT','DELETE'],
   credentials:true,
 }));
-app.use('/uploads',express.static("uploads"));
+app.use('/uploads',express.static('uploads'));
 import { userauthRoutes } from "./Routes/user.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
 
