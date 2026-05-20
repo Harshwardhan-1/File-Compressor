@@ -40,7 +40,7 @@ export function UploadFile(){
             formData.append('title',store[0].title);
             try{
                 const response=await axios.post(`${env.backendUrl}/api/v1/userFile`,formData,{withCredentials:true});
-                if(response.data.message=== 'File Compressed Successfully'){
+                if(response.data.message=== 'Successfully Compressed'){
                     setHideData(true);
                     ShowAlert("file compressed successfully")
                     setData(response.data.data);
@@ -53,17 +53,10 @@ export function UploadFile(){
     }
 
 
-    const handleDownload=async(data:string)=>{
-        try{
-            const downloadPath=data;
-            const response=await axios.post(`${env.backendUrl}/${downloadPath}`);
-            if(response.data.message=== 'successfully download'){
-                ShowAlert("Succcessfully Download")
-            }
-        }catch(err){
-            ShowAlert(err); 
-        }
-    }
+    const handleDownload = (filePath: string) => {
+    const fileName = filePath.split("/").pop();
+    window.location.href = `${env.backendUrl}/api/v1/download/${fileName}`;
+};
     return(
         <>
          <div className="upload-container">

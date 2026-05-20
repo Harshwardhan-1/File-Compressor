@@ -10,4 +10,4 @@ userauthRoutes.post('/oldUser',alreadyRegisteredUser);
 // userauthRoutes.post('/oldUser/:email/:password',alreadyRegisteredUser);//pass by params
 userauthRoutes.post('/verifyOtp',isUserLoggedIn,verifyOtp);
 userauthRoutes.get('/resendOtp',isUserLoggedIn,resendOtpToUser);
-userauthRoutes.get('/checkTok',isUserLoggedIn,checkTok);
+userauthRoutes.get('/checkTok',isUserLoggedIn,checkTok);  

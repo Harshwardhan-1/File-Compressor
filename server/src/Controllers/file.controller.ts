@@ -18,6 +18,9 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
                 message:issue,
             });
         }
+        if(!file?.filename){
+            return;
+        }
         const inputpath=file?.path;
         const outputpath=`uploadsCom/${file?.filename}`;
         if(!inputpath || !outputpath || !file?.mimetype){
@@ -58,7 +61,7 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
 
 
 
-export const downloadFile = (req:Request, res:Response) => {
+export const downloadFile = (req:authRequest, res:Response) => {
     const fileName = req.params.fileName;
     const filePath = path.join(process.cwd(), "uploadsCom", fileName);
     return res.download(filePath);
