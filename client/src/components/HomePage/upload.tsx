@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/HomePages/uploadpage.css";
-
+import { env } from "../../configs/env.config";
+import axios from "axios";
+import { ShowAlert } from "../../utils/alert";
 
 export function UploadFile(){
     const [file,setFile]=useState<File>();
@@ -16,7 +18,20 @@ export function UploadFile(){
     ]
 
     const handleSubmit=async()=>{
-        
+        if(!file || !store[0].title){
+            return;
+        }
+        const formData=new FormData();
+        formData.append('userfile',file);
+        formData.append('title',store[0].title);
+        try{
+            const response=await axios.post(`${env.backendUrl}/api/v1/userFile`,formData,{withCredentials:true});
+            if(response.data.message=== 'successfull'){
+                console.log('file compressed successfully');
+            }
+        }catch(err){
+            ShowAlert(err);
+        }
     }
     return(
         <>

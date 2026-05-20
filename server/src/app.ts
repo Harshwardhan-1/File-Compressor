@@ -13,6 +13,7 @@ app.use(cors({
   credentials:true,
 }));
 app.use('/uploads',express.static('uploads'));
+app.use('/uploadsCom',express.static('uploadsCom'));
 import { userauthRoutes } from "./Routes/user.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
 import { fileUpload } from "./Routes/file.upload.routes";
