@@ -17,6 +17,7 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
         }
         const inputpath=file?.path;
         const outputpath=`uploadCom/${Date.now()}/${file?.filename}`;
+          console.log(outputpath);
         if(!inputpath || !outputpath || !file?.mimetype){
             return res.status(400).json({
                 success:false,

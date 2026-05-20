@@ -13,21 +13,21 @@ interface imageData{
 
 export const imageHelper=async(data:imageData)=>{
     try{
-        const beforeCompresseion=data.fileSize/(1024*1024);
+        const beforeCompression=data.fileSize/(1024*1024);
        if(data.mimetype=== "image/jpeg"){
                 await sharp(data.inputpath)
-                .resize({width:800})
-                .jpeg({quality:60})
+                .resize({width:1080})
+                .jpeg({quality:80})
                 .toFile(data.outputpath);
                }else if(data.mimetype=== 'image/png'){
                 await sharp(data.inputpath)
-                .resize({width:800})
-                .webp({quality:60})
+                .resize({width:1080})
+                .webp({quality:80})
                 .toFile(data.outputpath)
            }else if(data.mimetype=== 'image/webp' || data.mimetype=== 'image/tiff' || data.mimetype=== 'image/avif'){
             await sharp(data.inputpath)
-            .resize({width:800})
-            .jpeg({quality:60})
+            .resize({width:1080})
+            .webp({quality:80})
             .toFile(data.outputpath)
            }else{
             throw new Error("unsupported file format");
@@ -37,9 +37,9 @@ export const imageHelper=async(data:imageData)=>{
            const afterCompression=compressedFile.size/(1024*1024);
            return{
             outputPath:data.outputpath,
-            BeforeCompressionSize:beforeCompresseion.toFixed(2),
+            BeforeCompressionSize:beforeCompression.toFixed(2),
             AfterCompressionSize:afterCompression.toFixed(2),
-            TotalMbSaved:(beforeCompresseion-afterCompression).toFixed(2),
+            TotalMbSaved:(beforeCompression-afterCompression).toFixed(2),
            }
         }catch(err){
             throw err;
