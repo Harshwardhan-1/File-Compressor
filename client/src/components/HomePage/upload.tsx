@@ -78,9 +78,9 @@ export function UploadFile(){
         {data && hideData && (
            <>
            <div>
-           <h1>Size Before Compression:{data.BeforeCompressionSize}</h1>
-           <h1>Size After Compression:{data.AfterCompressionSize}</h1>
-           <h1>Total Mb Saved:{data.TotalMbSaved}</h1>
+           <h1>Size Before Compression:{data.BeforeCompressionSize}MB</h1>
+           <h1>Size After Compression:{data.AfterCompressionSize}MB</h1>
+           <h1>Total Mb Saved:{data.TotalMbSaved}MB</h1>
            <button onClick={()=>handleDownload(data.outputPath)}>Download</button>
            </div>
            </>
