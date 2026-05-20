@@ -11,8 +11,13 @@ interface imageData{
     fileSize:number,
 }
 
+const allowedImageMimeTypes=["image/jpeg","image/png","image/webp","image/avif","image/tiff"];
 export const imageHelper=async(data:imageData)=>{
     try{
+        if(!allowedImageMimeTypes.includes(data.mimetype)){
+            throw new Error("only images file are allowed");
+            return;
+        }
         const beforeCompression=data.fileSize/(1024*1024);
        if(data.mimetype=== "image/jpeg"){
                 await sharp(data.inputpath)
