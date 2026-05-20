@@ -2,6 +2,8 @@ import { authRequest } from "../types/auth.types";
 import {Request,Response,NextFunction} from 'express';
 import { userfilevalidation } from "../validation/userfile.validation";
 import { imageHelper } from "../helpers/helper.image";
+import path from 'path';
+import fs from 'fs';
 
 
 export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
@@ -39,3 +41,11 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
         next(err);
     }
 }
+
+
+
+export const downloadFile = (req:Request, res:Response) => {
+    const fileName = req.params.fileName;
+    const filePath = path.join(process.cwd(), "uploadsCom", fileName);
+    return res.download(filePath);
+};
