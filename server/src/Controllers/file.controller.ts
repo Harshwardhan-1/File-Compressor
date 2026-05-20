@@ -16,11 +16,10 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
             });
         }
         const inputpath=file?.path;
-        const outputpath=`uploadCom/${Date.now()}/${file?.filename}`;
-          console.log(outputpath);
+        const outputpath=`uploadsCom/${file?.filename}`;
         if(!inputpath || !outputpath || !file?.mimetype){
             return res.status(400).json({
-                success:false,
+                success:false, 
                 message:"file compression failed",
             });
         }
@@ -31,10 +30,11 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
          const result=await imageHelper({title,inputpath,outputpath,mimetype,fileSize});
            return res.status(200).json({ 
             success:true,
-            message:"Image Compressed Successfully",
+            message:"File Compressed Successfully",
             data:result,
            })
         }
+        
     }catch(err){
         next(err);
     }

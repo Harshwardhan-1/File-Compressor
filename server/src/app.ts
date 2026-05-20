@@ -23,7 +23,7 @@ app.get("/"  , (req : Request, res : Response)=>{
 })
 
 app.use('/api/v1',userauthRoutes);
-app.use('api/v1',fileUpload);
+app.use('/api/v1',fileUpload);
 app.use(errorMiddleware);
 
 export default app;

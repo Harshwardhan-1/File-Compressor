@@ -1,4 +1,4 @@
-import Router from 'express';
+import {Router} from 'express';
 export const fileUpload=Router();
 import { upload } from '../middleware/file.upload.middleware';
 import { userFile } from '../Controllers/file.controller';

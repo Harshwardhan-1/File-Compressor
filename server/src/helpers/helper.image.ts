@@ -12,6 +12,7 @@ interface imageData{
 }
 
 const allowedImageMimeTypes=["image/jpeg","image/png","image/webp","image/avif","image/tiff"];
+
 export const imageHelper=async(data:imageData)=>{
     try{
         if(!allowedImageMimeTypes.includes(data.mimetype)){
@@ -37,7 +38,6 @@ export const imageHelper=async(data:imageData)=>{
            }else{
             throw new Error("unsupported file format");
            }
-           //fs stat give info about file size when created,updated simply means it give info about file
            const compressedFile=await fs.stat(data.outputpath);
            const afterCompression=compressedFile.size/(1024*1024);
            return{
