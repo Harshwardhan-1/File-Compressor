@@ -15,12 +15,14 @@ app.use(cors({
 app.use('/uploads',express.static('uploads'));
 import { userauthRoutes } from "./Routes/user.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
+import { fileUpload } from "./Routes/file.upload.routes";
 
 app.get("/"  , (req : Request, res : Response)=>{
   res.send("hii harsh here")
 })
 
 app.use('/api/v1',userauthRoutes);
+app.use('api/v1',fileUpload);
 app.use(errorMiddleware);
 
 export default app;

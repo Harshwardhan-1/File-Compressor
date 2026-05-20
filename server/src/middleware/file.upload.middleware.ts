@@ -7,9 +7,9 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    //it get the extension from the file like jpg,png etc
     const ext=path.extname(file.originalname);
     cb(null, file.fieldname + '-' + uniqueSuffix+ext);
+    console.log(req.file);
   }
 })
 
