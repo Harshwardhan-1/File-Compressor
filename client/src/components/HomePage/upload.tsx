@@ -4,7 +4,7 @@ import "../styles/HomePages/uploadpage.css";
 import { env } from "../../configs/env.config";
 import axios from "axios";
 import { ShowAlert } from "../../utils/alert";
-
+import { motion } from "framer-motion";
 interface compressedImage{
     outputPath:string,
     BeforeCompressionSize:string,
@@ -17,6 +17,7 @@ export function UploadFile(){
     const [file,setFile]=useState<File>();
     const location=useLocation();
     const tool=location.state?.harsh;
+    const [status,setStatus]=useState("");
     const store=[
         {
           title:tool.title,
@@ -24,6 +25,10 @@ export function UploadFile(){
           userName:tool.userName,  
         },
     ]
+            
+
+            
+            
         const [data,setData]=useState<compressedImage>();
         const [loading,setloading]=useState(false);
         const [hideData,setHideData]=useState(false);
@@ -35,6 +40,10 @@ export function UploadFile(){
             }
             setloading(true);
             setHideData(false);
+             const array=["Processing","Reading File","Compressing","Finalizing","Almost Done"];
+            for(let i=0;i<array.length;i++){
+                setTimeout(()=>setStatus(array[i]),i*1000);
+            }
             const formData=new FormData();
             formData.append('userfile',file);
             formData.append('title',store[0].title);
@@ -49,6 +58,7 @@ export function UploadFile(){
                 ShowAlert(err);
             }finally{
                 setloading(false);
+                setStatus("");
             }
     }
 
@@ -64,7 +74,7 @@ export function UploadFile(){
         <h1 className="upload-title">{store[0].title}</h1>
         <form  className="upload-form" encType="multipart/form-data">
          <label className="upload-box">
-            <input className="file-input" type="file" name="userfile" onChange={(e)=>setFile(e.target.files?.[0])} />
+            <input className="file-input" type="file" name="userfile" onClick={()=>setHideData(false)} onChange={(e)=>setFile(e.target.files?.[0])} />
              <div className="upload-inner">
                     <div className="cloud">☁</div>
                     <p>Drop files here or click to upload</p>
@@ -73,14 +83,19 @@ export function UploadFile(){
                 </div>
             </label>
             <button onClick={handleSubmit} className="start-btn" type="submit">{loading ?(<div className="spinner"></div>):("Send")}</button>
+            <motion.p className="status" key={status}
+            initial={{y:15,opacity:0}}
+            animate={{y:0,opacity:1}}
+            transition={{duration:0.8,ease:"easeIn"}}
+            >{status}</motion.p>
         </form>
 
         {data && hideData && (
            <>
-           <div>
-           <h1>Size Before Compression:{data.BeforeCompressionSize}MB</h1>
-           <h1>Size After Compression:{data.AfterCompressionSize}MB</h1>
-           <h1>Total Mb Saved:{data.TotalMbSaved}MB</h1>
+           <div  className="result-box">
+           <h1>Size Before Compression:{data.BeforeCompressionSize} MB</h1>
+           <h1>Size After Compression:{data.AfterCompressionSize} MB</h1>
+           <h1>Total Mb Saved:{data.TotalMbSaved} MB</h1>
            <button onClick={()=>handleDownload(data.outputPath)}>Download</button>
            </div>
            </>

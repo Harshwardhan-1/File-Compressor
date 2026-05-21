@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import fs from 'fs/promises';
 
+
 interface compressedPdf{
     title:string,
     inputpath:string,
@@ -17,9 +18,7 @@ export const pdfhelper = async(data:compressedPdf)=>{
     }
     const pdfBeforeCompression =data.fileSize/(1024*1024);
     return new Promise((resolve,reject)=>{
-        const command =
-`"C:\\Program Files\\gs\\gs10.07.1\\bin\\gswin64c.exe" -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;
-        exec(command, async(error, stdout, stderr)=>{
+const command = `gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;        exec(command, async(error, stdout, stderr)=>{
             try{
                 if(error){
                     console.log("GHOSTSCRIPT ERROR:");
@@ -27,12 +26,9 @@ export const pdfhelper = async(data:compressedPdf)=>{
                     reject(error);
                     return;
                 }
-                const compressedFile =
-                await fs.stat(data.outputpath);
-                const pdfafterCompression =
-                compressedFile.size/(1024*1024);
-                const TotalMbSaved =
-                pdfBeforeCompression-pdfafterCompression;
+                const compressedFile=await fs.stat(data.outputpath);
+                const pdfafterCompression=compressedFile.size/(1024*1024);
+                const TotalMbSaved=pdfBeforeCompression-pdfafterCompression;
                 resolve({
                     outputPath:data.outputpath,
                     BeforeCompressionSize:pdfBeforeCompression.toFixed(2),
@@ -49,3 +45,15 @@ export const pdfhelper = async(data:compressedPdf)=>{
 }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+//const command = `"C:\\Program Files\\gs\\gs10.07.1\\bin\\gswin64c.exe" -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;
