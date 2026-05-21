@@ -4,8 +4,8 @@ import { userfilevalidation } from "../validation/userfile.validation";
 import { imageHelper } from "../helpers/helper.image";
 import { pdfhelper } from "../helpers/helper.pdf";
 import path from 'path';
-import fs from 'fs';
-
+import { helperVideo } from "../helpers/helper.video";
+import { data } from "framer-motion/client";
 
 export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
     try{
@@ -55,6 +55,15 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
                 success:true,
                 message:"Successfully Compressed",
                 data:compressPdf,
+            })
+        }else if(title=== "Compress Video"){
+            const mimetype=file?.mimetype;
+            const fileSize=file?.size;
+            const compressedVideo=await helperVideo({title,inputpath,outputpath,mimetype,fileSize});
+            return res.status(200).json({
+                success:true,
+                message:"Successfully Compressed",
+                data:compressedVideo,
             })
         }
     }catch(err){
