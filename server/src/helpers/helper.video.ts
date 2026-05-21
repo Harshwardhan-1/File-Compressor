@@ -1,5 +1,6 @@
 import {exec} from 'child_process';
 import fs from 'fs/promises';
+const ffmpeg=require("ffmpeg-static");
 interface helperVid{
     outputpath:string,
     title:string,
@@ -15,8 +16,10 @@ export const helperVideo=async(data:helperVid)=>{
         throw new Error("Invalid video type");
     }
    
-const command = `C:\\ffmpeg-8.1.1-essentials_build\\bin\\ffmpeg.exe -i "${data.inputpath}" -vcodec libx264 -crf 28 -preset fast -movflags +faststart "${data.outputpath}"`;
-    await new Promise((resolve,reject)=>{
+//  const command = `C:\\ffmpeg-8.1.1-essentials_build\\bin\\ffmpeg.exe -i "${data.inputpath}" -vcodec libx264 -crf 28 -preset fast -movflags +faststart "${data.outputpath}"`;
+const ffmpegPath = require("ffmpeg-static");
+const command = `"${ffmpegPath}" -i "${data.inputpath}" -c:v libx264 -crf 28 -preset ultrafast -movflags +faststart "${data.outputpath}"`;
+await new Promise((resolve,reject)=>{
     exec(command,(error,stdout,stderr)=>{
         if(error){
             console.log(error);
@@ -31,6 +34,7 @@ const compressedFile=await fs.stat(data.outputpath);
 const videoafterCompression=compressedFile.size/(1024*1024);
 const TotalMbSaved=(videoBeforeCompression-videoafterCompression).toFixed(2);
 return{
+    title:data.title,
 outputPath:data.outputpath,
 BeforeCompressionSize:videoBeforeCompression.toFixed(2),
 AfterCompressionSize:videoafterCompression.toFixed(2),

@@ -22,7 +22,7 @@ export function Dashboard(){
     }
       const tools = [
     {
-      title: "Compress video",
+      title: "Compress Video",
       icon: <Video size={28} />,
       desc: "Reduce video size by adjusting...",
     },
@@ -63,7 +63,7 @@ export function Dashboard(){
         <p>Compress your files online. Select a compression tool:</p>
       </div>
             <div className="categories">
-        <span>Compress video</span>
+        <span>Compress Video</span>
         <span>Compress Image</span>
         <span>Compress PDF</span>
         <span>Compress JPG</span>

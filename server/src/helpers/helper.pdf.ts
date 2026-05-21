@@ -30,6 +30,7 @@ const command = `gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTIN
                 const pdfafterCompression=compressedFile.size/(1024*1024);
                 const TotalMbSaved=pdfBeforeCompression-pdfafterCompression;
                 resolve({
+                    title:data.title,
                     outputPath:data.outputpath,
                     BeforeCompressionSize:pdfBeforeCompression.toFixed(2),
                     AfterCompressionSize:pdfafterCompression.toFixed(2),

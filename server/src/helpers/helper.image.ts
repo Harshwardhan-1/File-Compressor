@@ -41,6 +41,7 @@ export const imageHelper=async(data:imageData)=>{
            const compressedFile=await fs.stat(data.outputpath);
            const afterCompression=compressedFile.size/(1024*1024);
            return{
+            title:data.title,
             outputPath:data.outputpath,
             BeforeCompressionSize:beforeCompression.toFixed(2),
             AfterCompressionSize:afterCompression.toFixed(2),

@@ -6,6 +6,7 @@ import axios from "axios";
 import { ShowAlert } from "../../utils/alert";
 import { motion } from "framer-motion";
 interface compressedImage{
+    title:string,
     outputPath:string,
     BeforeCompressionSize:string,
     AfterCompressionSize:string,
@@ -25,9 +26,7 @@ export function UploadFile(){
           userName:tool.userName,  
         },
     ]
-            
 
-            
             
         const [data,setData]=useState<compressedImage>();
         const [loading,setloading]=useState(false);
@@ -41,9 +40,25 @@ export function UploadFile(){
             setloading(true);
             setHideData(false);
              const array=["Processing","Reading File","Compressing","Finalizing","Almost Done"];
+              const timeouts:number[]=[];
             for(let i=0;i<array.length;i++){
-                setTimeout(()=>setStatus(array[i]),i*1000);
-            }
+    if(store[0].title=== "Compress PDF"){
+        const timeout=window.setTimeout(() => {
+            setStatus(array[i]);
+        },i*3000);
+        timeouts.push(timeout);
+    }else if(store[0].title=== "Compress Video"){
+        const timeout=window.setTimeout(() => {
+            setStatus(array[i]);
+        },i*15000);
+        timeouts.push(timeout);
+    }else{
+        const timeout=window.setTimeout(() => {
+          setStatus(array[i]);
+        },i*3000);
+        timeouts.push(timeout);
+    }
+}
             const formData=new FormData();
             formData.append('userfile',file);
             formData.append('title',store[0].title);
@@ -51,14 +66,15 @@ export function UploadFile(){
                 const response=await axios.post(`${env.backendUrl}/api/v1/userFile`,formData,{withCredentials:true});
                 if(response.data.message=== 'Successfully Compressed'){
                     setHideData(true);
-                    ShowAlert("file compressed successfully")
+                    ShowAlert("file compressed successfully");
                     setData(response.data.data);
+                    setStatus("");
                 }
             }catch(err){
                 ShowAlert(err);
+                setStatus("");
             }finally{
                 setloading(false);
-                setStatus("");
             }
     }
 
@@ -89,7 +105,7 @@ export function UploadFile(){
             transition={{duration:0.8,ease:"easeIn"}}
             >{status}</motion.p>
         </form>
-
+ 
         {data && hideData && (
            <>
            <div  className="result-box">
