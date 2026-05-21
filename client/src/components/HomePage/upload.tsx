@@ -26,8 +26,6 @@ export function UploadFile(){
           userName:tool.userName,  
         },
     ]
-
-            
         const [data,setData]=useState<compressedImage>();
         const [loading,setloading]=useState(false);
         const [hideData,setHideData]=useState(false);
@@ -42,20 +40,12 @@ export function UploadFile(){
              const array=["Processing","Reading File","Compressing","Finalizing","Almost Done"];
               const timeouts:number[]=[];
             for(let i=0;i<array.length;i++){
-    if(store[0].title=== "Compress PDF"){
-        const timeout=window.setTimeout(() => {
-            setStatus(array[i]);
-        },i*3000);
+    if(store[0].title=== "Compress PDF"){const timeout=window.setTimeout(()=>{setStatus(array[i]);},i*3000);
         timeouts.push(timeout);
-    }else if(store[0].title=== "Compress Video"){
-        const timeout=window.setTimeout(() => {
-            setStatus(array[i]);
-        },i*15000);
+    }else if(store[0].title=== "Compress Video"){const timeout=window.setTimeout(() => {setStatus(array[i]);},i*15000);
         timeouts.push(timeout);
     }else{
-        const timeout=window.setTimeout(() => {
-          setStatus(array[i]);
-        },i*3000);
+        const timeout=window.setTimeout(()=>{setStatus(array[i]);},i*3000);
         timeouts.push(timeout);
     }
 }
@@ -67,6 +57,7 @@ export function UploadFile(){
                 if(response.data.message=== 'Successfully Compressed'){
                     setHideData(true);
                     ShowAlert("file compressed successfully");
+                    timeouts.forEach((id)=>{clearTimeout(id);});
                     setData(response.data.data);
                     setStatus("");
                 }
@@ -77,8 +68,6 @@ export function UploadFile(){
                 setloading(false);
             }
     }
-
-
     const handleDownload = (filePath: string) => {
     const fileName = filePath.split("/").pop();
     window.location.href = `${env.backendUrl}/api/v1/download/${fileName}`;
