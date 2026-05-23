@@ -15,7 +15,7 @@ export function Dashboard(){
     const navigate=useNavigate();
     const handleCardClick=async(tool:cardClick)=>{
       if(!data){
-      return  ShowAlert('please do a signUp first');
+      return  ShowAlert('please do a login first');
       }else{
         navigate('/upload',{state:{harsh:{title:tool.title,desc:tool.desc,userName:data?.userName}}})
       }

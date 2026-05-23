@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import fs from 'fs/promises';
-
+import { COMPRESS_PDF } from '../configs/env.config';
 
 interface compressedPdf{
     title:string,
@@ -18,7 +18,8 @@ export const pdfhelper = async(data:compressedPdf)=>{
     }
     const pdfBeforeCompression =data.fileSize/(1024*1024);
     return new Promise((resolve,reject)=>{
-const command = `gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;        exec(command, async(error, stdout, stderr)=>{
+const command = `${COMPRESS_PDF}"${data.outputpath}" "${data.inputpath}"`;       
+ exec(command, async(error, stdout, stderr)=>{
             try{
                 if(error){
                     console.log("GHOSTSCRIPT ERROR:");
@@ -58,3 +59,5 @@ const command = `gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTIN
 
 
 //const command = `"C:\\Program Files\\gs\\gs10.07.1\\bin\\gswin64c.exe" -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;
+//const command = `gswin64c -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile="${data.outputpath}" "${data.inputpath}"`;       
+ 

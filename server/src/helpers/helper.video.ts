@@ -1,6 +1,7 @@
 import {exec} from 'child_process';
 import fs from 'fs/promises';
 const ffmpeg=require("ffmpeg-static");
+import { COMPRESS_VIDEO } from '../configs/env.config';
 interface helperVid{
     outputpath:string,
     title:string,
@@ -17,8 +18,9 @@ export const helperVideo=async(data:helperVid)=>{
     }
    
 //  const command = `C:\\ffmpeg-8.1.1-essentials_build\\bin\\ffmpeg.exe -i "${data.inputpath}" -vcodec libx264 -crf 28 -preset fast -movflags +faststart "${data.outputpath}"`;
+//const command = `"${ffmpegPath}" -i "${data.inputpath}" -c:v libx264 -crf 28 -preset ultrafast -movflags +faststart "${data.outputpath}"`;
 const ffmpegPath = require("ffmpeg-static");
-const command = `"${ffmpegPath}" -i "${data.inputpath}" -c:v libx264 -crf 28 -preset ultrafast -movflags +faststart "${data.outputpath}"`;
+const command = `"${ffmpegPath}" -i "${data.inputpath}" ${COMPRESS_VIDEO} "${data.outputpath}"`;
 await new Promise((resolve,reject)=>{
     exec(command,(error,stdout,stderr)=>{
         if(error){

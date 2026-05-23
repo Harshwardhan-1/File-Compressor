@@ -47,9 +47,6 @@ export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
         else  if(title=== 'Compress PDF'){
             const mimetype=file?.mimetype;
             const fileSize=file?.size;
-            console.log(inputpath);
-            console.log("harsh");
-            console.log(outputpath);
             const compressPdf=await pdfhelper({title,inputpath,outputpath,mimetype,fileSize});
             return res.status(200).json({
                 success:true,

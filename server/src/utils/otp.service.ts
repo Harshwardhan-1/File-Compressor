@@ -5,6 +5,7 @@ sgMail.setApiKey(SENDGRID_API_KEY as string);
 
 export const sendOtpService=async(email:string)=>{
 try{
+    console.log("yaha tak poocha ");
  const generateOtp=Math.floor(100000+Math.random()*900000);
     const putOtp=await checkOtpModel.findOne({email});
     if(!putOtp){
@@ -19,7 +20,7 @@ try{
         putOtp.otpExpiresTime=new Date(Date.now()+5*60*1000);
         await putOtp.save();
     }
-
+console.log("await main tak poocha");
     await sgMail.send({
         to:email,
         from:SENDGRID_EMAIL as string,

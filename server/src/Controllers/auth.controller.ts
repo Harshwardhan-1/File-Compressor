@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { userSchemaVal,userloginSchema,verifyOtpSchema } from '../validation/user.validation';
 import { JWT_SECRET,SALT_ROUND } from '../configs/env.config';
 import jwt from 'jsonwebtoken';
-import { sendOtpService } from '../utils/otp.service';
+// import { sendOtpService } from '../utils/otp.service';
 import { checkOtpModel } from '../models/otp.model';
 import { authRequest } from '../types/auth.types';
 
@@ -102,11 +102,11 @@ try{
         })
     }
 
-try{
-    await sendOtpService(email);
-}catch(err){
-    next(err);
-}
+// try{
+//     await sendOtpService(email);
+// }catch(err){
+//     next(err);
+// }
     const token=jwt.sign({userId:oldUser._id,email:email,role:oldUser.role},JWT_SECRET as string);
     res.cookie('token',token,{
         httpOnly:true,
@@ -199,15 +199,15 @@ export const resendOtpToUser=async(req:authRequest,res:Response,next:NextFunctio
             message:"something went wrong",
             });
         }
-        try{
-        await sendOtpService(email);
-        return res.status(200).json({
-            success:true,
-            message:"successfully send",
-        })
-        }catch(err){
-            next(err);
-        }
+        // try{
+        // await sendOtpService(email);
+        // return res.status(200).json({
+        //     success:true,
+        //     message:"successfully send",
+        // })
+        // }catch(err){
+        //     next(err);
+        // }
     }catch(err){
         next(err);
     }

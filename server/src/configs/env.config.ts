@@ -13,4 +13,6 @@ export const{
     JWT_SECRET,
     SENDGRID_EMAIL,
     SENDGRID_API_KEY,
+    COMPRESS_PDF,
+    COMPRESS_VIDEO,
 }=process.env;

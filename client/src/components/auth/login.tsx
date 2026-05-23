@@ -20,7 +20,7 @@ export function Login(){
         try{
             const response=await axios.post(`${env.backendUrl}/api/v1/oldUser`,send,{withCredentials:true});
             if(response.data.message=== 'already registered'){
-                navigate('/otpPage');
+                navigate('/');
             }
         }catch(err){
             ShowAlert(err);
