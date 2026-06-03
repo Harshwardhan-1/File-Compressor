@@ -5,7 +5,6 @@ import { imageHelper } from "../helpers/helper.image";
 import { pdfhelper } from "../helpers/helper.pdf";
 import path from 'path';
 import { helperVideo } from "../helpers/helper.video";
-import { data } from "framer-motion/client";
 
 export const userFile=async(req:authRequest,res:Response,next:NextFunction)=>{
     try{
