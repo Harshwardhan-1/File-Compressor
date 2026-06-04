@@ -21,6 +21,9 @@ import { fileUpload } from "./Routes/file.upload.routes";
 app.get("/"  , (req : Request, res : Response)=>{
   res.send("hii harsh here")
 })
+app.get("/test",(req:Request,res:Response)=>{
+  res.send("check test");
+})
 
 app.use('/api/v1',userauthRoutes);
 app.use('/api/v1',fileUpload);
