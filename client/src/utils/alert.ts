@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import { AxiosError } from "axios";
 
 export const ShowAlert=(err:unknown)=>{
+    console.log(err);
     let message="Something went wrong";
     if(typeof err=== "string" && err=== "file compressed successfully"){
         let showMess="successfull";
