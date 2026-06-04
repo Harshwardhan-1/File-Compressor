@@ -222,9 +222,13 @@ export const resendOtpToUser=async(req:authRequest,res:Response,next:NextFunctio
       
 
 export const checkTok=async(req:authRequest,res:Response)=>{
+    try{
 return res.status(200).json({
     success:true,
     message:'successfull',
     data:req.user,
 });
+}catch(err){
+    console.log(err);
+}
 }
