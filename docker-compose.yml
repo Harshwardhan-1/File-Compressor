@@ -5,7 +5,7 @@ services:
   build: './server'
   image: 'backend'
   container_name: compressor-backend
-  ports:
+  ports:  
   - "3000:3000"
      
  frontend:
