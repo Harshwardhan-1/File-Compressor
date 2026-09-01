@@ -13,4 +13,4 @@ services:
   image: 'frontend'
   container_name: 'compressor-frontend'  
   ports:
-  - "5173:5173"   
+  - "5173:5173"    
